@@ -56,7 +56,11 @@
       "containerName": {
           "type": "string",
           "defaultValue": "azure-function"
-      }
+      },
+    "tagsByResource": {
+      "type": "object",
+      "defaultValue": {}
+    }
     },
     "variables": {
         "resourceGroup": "[resourceGroup()]",
@@ -178,7 +182,8 @@
                 },
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "reserved": true
-            }
+            },
+            "tags": "[ if(contains(parameters('tagsByResource'), 'Microsoft.Web/sites'), parameters('tagsByResource')['Microsoft.Web/sites'], json('{}')) ]"
         },
         {
           "type": "Microsoft.Web/serverfarms",
